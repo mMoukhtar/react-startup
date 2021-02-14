@@ -52,6 +52,7 @@ export default {
         new HtmlWebPackPlugin({
             filename: 'index.html',
             template: './public/index.html',
+            favicon: './public/favicon.ico',
         }),
         new CleanWebpackPlugin({
             // Simulate the removal of files

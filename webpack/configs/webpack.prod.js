@@ -40,7 +40,7 @@ export default {
     },
     plugins: [
         new HtmlWebPackPlugin({
-            template: './src/client/views/index.html',
+            template: './public/index.html',
             filename: './index.html',
         }),
         new CleanWebpackPlugin({
