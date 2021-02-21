@@ -34,15 +34,20 @@ export default {
   // Dev Tools
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: path.join(__dirname, '../../dist'),
-    compress: true,
     port: 3000,
     open: 'Google Chrome',
-    watchContentBase: true,
+    contentBase: path.join(__dirname, '../../dist'),
     hot: true,
+    compress: true,
+    watchContentBase: true,
     stats: {
       colors: true,
     },
+    //When using this we are telling webpack dev server to return any 404 requests to output.publicPath
+    // settings of webpack.config in this case it will redirect any 404 requests to home page
+    // this is important to disable webpack to act as server and fall back to public path and allow
+    // react router to take care of the routing
+    historyApiFallback: true,
   },
   stats: 'verbose',
   // Loaders
