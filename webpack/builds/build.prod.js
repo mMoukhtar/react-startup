@@ -1,5 +1,5 @@
 import webpack from 'webpack';
-import webpackConfig from '../Configs/webpack.prod.mjs';
+import webpackConfig from '../Configs/webpack.prod';
 import chalk from 'chalk';
 
 process.env.NODE_ENV = 'production';
@@ -8,7 +8,7 @@ console.log(chalk.blue('--------------------------------------------------------
 console.log(`📦 ${chalk.white.bgBlue('[ WEBPACK ]:: Generating minified bundle for production....')}`);
 console.log(chalk.blue('---------------------------------------------------------------'));
 
-webpack(webpackConfig).run((error, status) => {
+webpack(webpackConfig).run((error, stats) => {
   if (error) {
     console.log(
       `📦 ${chalk.white.bgRed('[ WEBPACK ]:: Fetal error while generating production bundle....')}`
@@ -17,9 +17,9 @@ webpack(webpackConfig).run((error, status) => {
     console.log(`🔴 ${chalk.red(error)}`);
     return 1;
   } else {
-    const jsonStatus = status.toJson();
+    const jsonStatus = stats.toJson();
 
-    if (status.hasErrors()) {
+    if (stats.hasErrors()) {
       console.log(`📦 ${chalk.white.bgRed('[ WEBPACK ]:: Errors while generating production bundle....')}`);
       console.log(`❗ ${chalk.red('- Error Message(s)::')}`);
       return jsonStatus.errors.map((error) => {
@@ -27,7 +27,7 @@ webpack(webpackConfig).run((error, status) => {
       });
     }
 
-    if (status.hasWarnings()) {
+    if (stats.hasWarnings()) {
       console.log(
         `📦 ${chalk.black.bgYellow('[ WEBPACK ]:: Warnings while generating production bundle....')}`
       );
@@ -40,8 +40,9 @@ webpack(webpackConfig).run((error, status) => {
     console.log(`📦 ${chalk.white.bgBlue('[ WEBPACK ]:: Bundling Succeed!')}`);
     console.log(chalk.blue('---------------------------------------'));
     console.log(
-      status.toString({
+      stats.toString({
         colors: true,
+        //chunks: true,
       })
     );
 
